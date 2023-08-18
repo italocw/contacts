@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Contacts</string>
+    <string name="email">Email</string>
+    <string name="age">Age</string>
+    <string name="id">Id</string>
+    <string name="avantsoft_logo">Avantsoft Logo\n</string>
+</resources>
