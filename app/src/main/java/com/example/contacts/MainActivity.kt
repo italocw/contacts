@@ -25,12 +25,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             val uiState by viewModel.uiState.collectAsState()
 
-
             ContactsTheme {
                 ContactsApp(uiState)
             }
         }
     }
-
 }
 

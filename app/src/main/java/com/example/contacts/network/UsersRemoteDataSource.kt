@@ -1,5 +1,6 @@
 package com.example.contacts.network
 
+import com.example.contacts.UsersUIState
 import com.example.contacts.models.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

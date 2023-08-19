@@ -14,7 +14,7 @@ data class NetworkUsersContainer(
         val email: String
     )
 
-    fun NetworkUsersContainer.asDomainModel(): List<User> {
+    fun asDomainModel(): List<User> {
 
         return networkUsers.map {
             User(

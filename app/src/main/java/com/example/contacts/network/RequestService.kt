@@ -8,8 +8,7 @@ import java.net.InetAddress
 
 const val USERS_ENDPOINT = "ce47ee53-6531-4821-a6f6-71a188eaaee0"
 
-interface ApiService {
-
+interface UsersService {
     @GET(USERS_ENDPOINT)
     suspend fun getUsers(): Response<NetworkUsersContainer>
 }

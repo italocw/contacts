@@ -20,7 +20,7 @@ val fonts = FontFamily(
 )
 
 val typography = androidx.compose.material3.Typography(
- titleLarge = TextStyle(fontFamily = fonts, fontWeight = FontWeight.Bold, fontSize = 31.sp),
+    titleLarge = TextStyle(fontFamily = fonts, fontWeight = FontWeight.Bold, fontSize = 31.sp),
     labelSmall = TextStyle(fontFamily = fonts, fontWeight = FontWeight.Bold, fontSize = 14.sp),
     bodyMedium = TextStyle(fontFamily = fonts, fontWeight = FontWeight.Normal, fontSize = 18.sp),
 

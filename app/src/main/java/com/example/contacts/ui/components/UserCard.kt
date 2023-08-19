@@ -10,20 +10,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CardElevation
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -38,64 +35,88 @@ import com.example.contacts.ui.theme.ContactsTheme
 
 @Composable
 fun UserCard(user: User) {
+    val mediumPadding = dimensionResource(id = R.dimen.medium_padding)
+    val smallPadding = dimensionResource(id = R.dimen.small_padding)
+    val extraSmallPadding = dimensionResource(R.dimen.extra_small_padding)
 
-        val gradientBrush = Brush.horizontalGradient(
-            colors = listOf(
-                CardGradientFirst,
-                CardGradientSecond,
-                CardGradientThird
-            )
+    val gradientBrush = Brush.horizontalGradient(
+        colors = listOf(
+            CardGradientFirst, CardGradientSecond, CardGradientThird
         )
+    )
 
-        OutlinedCard(
-            shape = RoundedCornerShape(8.dp),
-            modifier = Modifier
-                .size(width = 239.dp, height = 185.dp).shadow(8.dp), border = BorderStroke(2.dp, gradientBrush)
-
+    OutlinedCard(
+        shape = RoundedCornerShape(8.dp),
+        modifier = Modifier
+            .size(width = 239.dp, height = 185.dp)
+            .shadow(8.dp),
+        border = BorderStroke(2.dp, gradientBrush)
+    ) {
+        Column(
+            Modifier.padding(mediumPadding)
         ) {
-            Column(
-                Modifier.padding(16.dp)
+            Name(user.name)
+            Divider()
+            UserField(stringResource(id = R.string.email), user.email)
 
+            Row(
+                Modifier.padding(top = smallPadding)
             ) {
-                Text(
-                    user.name,
-                    style = MaterialTheme.typography.titleLarge,  maxLines = 1, overflow = TextOverflow.Ellipsis
-                )
+
+                Column() {
+                    UserField(stringResource(id = R.string.age), user.age.toString())
+                }
 
                 Spacer(
-                    modifier = Modifier
-                        .padding(vertical = 4.dp)
-                        .fillMaxWidth()
-                        .height(2.dp)
-                        .background(AvantsoftLogoBackground)
+                    Modifier.width(extraSmallPadding)
                 )
-
-                UserFieldTitle(stringResource(id = R.string.email))
-                UserFieldData(user.email)
-
-                Row(
-                    Modifier
-                        .wrapContentHeight()
-                        .padding(top = 8.dp)
-                ) {
-
-                    Column() {
-                        UserFieldTitle(stringResource(id = R.string.age))
-                        UserFieldData(user.age.toString())
-
-                    }
-                    Column(Modifier.padding(start = 4.dp)) {
-                        UserFieldTitle(stringResource(id = R.string.id))
-                        UserFieldData(user.id)
-                    }
+                Column() {
+                    UserField(stringResource(id = R.string.id), user.id)
                 }
             }
+        }
     }
 }
 
 @Composable
+private fun UserField(title: String, data: String) {
+    UserFieldTitle(title)
+    UserFieldData(data)
+}
+
+@Composable
+private fun Divider() {
+    val extraSmallPadding = dimensionResource(R.dimen.extra_small_padding)
+
+    Spacer(
+        modifier = Modifier
+            .padding(vertical = extraSmallPadding)
+            .fillMaxWidth()
+            .height(2.dp)
+            .background(AvantsoftLogoBackground)
+    )
+}
+
+@Composable
+private fun Name(name: String) {
+    Text(
+        name,
+        style = MaterialTheme.typography.titleLarge,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis
+    )
+}
+
+@Composable
 private fun UserFieldData(data: String) {
-    Text(text = data, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.alpha(0.8f), maxLines = 1,  overflow = TextOverflow.Ellipsis)   }
+    Text(
+        text = data,
+        style = MaterialTheme.typography.bodyMedium,
+        modifier = Modifier.alpha(0.8f),
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis
+    )
+}
 
 
 @Composable
@@ -103,14 +124,15 @@ private fun UserFieldTitle(title: String) {
     Text(
         text = title,
         style = MaterialTheme.typography.labelSmall,
-         maxLines = 1,  overflow = TextOverflow.Ellipsis
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis
     )
 }
 
 @Preview(
-    uiMode = Configuration.UI_MODE_NIGHT_NO,
-    name = "DefaultPreviewLight"
+    uiMode = Configuration.UI_MODE_NIGHT_NO, name = "DefaultPreviewLight"
 )
+
 @Composable
 fun ContactsAppPreview() {
     ContactsTheme {

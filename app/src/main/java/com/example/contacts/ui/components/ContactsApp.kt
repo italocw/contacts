@@ -17,6 +17,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -29,19 +30,22 @@ fun ContactsApp(uiState: UsersUIState) {
     Surface(
         modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
     ) {
+        val usersGroups = uiState.users.chunked(10)
 
-        UsersGroups(uiState)
+        UsersGroups(usersGroups)
     }
 }
 
 @Composable
 fun AvantsoftHeader() {
+    val mediumPadding =  dimensionResource(id = R.dimen.medium_padding)
+
     Box(
         modifier = Modifier
             .height(87.dp)
             .background(
                 color = MaterialTheme.colorScheme.onBackground,
-                shape = RoundedCornerShape(bottomEnd = 16.dp, bottomStart = 16.dp)
+                shape = RoundedCornerShape(bottomEnd = mediumPadding, bottomStart =mediumPadding)
             )
             .fillMaxWidth(),
         contentAlignment = Alignment.Center
@@ -66,23 +70,14 @@ private fun AvantsoftLogo() {
 }
 
 @Composable
-private fun UsersGroups(uiState: UsersUIState) {
-    val users = uiState.users
-
-    val maxElementsByGroup = 10
-    val groups = mutableListOf<List<User>>()
-
-    (users.indices step maxElementsByGroup).forEach { index ->
-        val group = users.subList(index, (index + maxElementsByGroup).coerceAtMost(users.size))
-        groups.add(group)
-    }
-
+private fun UsersGroups(usersGroups: List<List<User>>) {
     LazyColumn(
-        verticalArrangement = Arrangement.spacedBy(32.dp),
-        contentPadding = PaddingValues(bottom = 16.dp)
+        verticalArrangement = Arrangement.spacedBy( dimensionResource(id = R.dimen.large_padding)),
+        contentPadding = PaddingValues(bottom = dimensionResource(id = R.dimen.medium_padding))
     ) {
         item { AvantsoftHeader() }
-        items(groups) { group ->
+
+        items(usersGroups) { group ->
             UsersGroup(group)
         }
     }
@@ -91,10 +86,11 @@ private fun UsersGroups(uiState: UsersUIState) {
 
 @Composable
 fun UsersGroup(users: List<User>) {
+    val mediumPadding =  dimensionResource(id = R.dimen.medium_padding)
 
     LazyRow(
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
-        contentPadding = PaddingValues(horizontal = 16.dp)
+        horizontalArrangement = Arrangement.spacedBy(mediumPadding),
+        contentPadding = PaddingValues(horizontal = mediumPadding)
     ) {
         items(users) { user ->
             UserCard(user)
